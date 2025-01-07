@@ -5,20 +5,14 @@ from typing import List, Optional
 import requests
 import os
 
+from backend.income_statement import IncomeStatement
+
 app = FastAPI()
 
 # Configuring API and keys
 API_KEY = os.environ.get('API_KEY')
 BASE_URL = "https://financialmodelingprep.com/api/v3/income-statement/AAPL"
 
-# Data Model for API Response
-class IncomeStatement(BaseModel):
-    date: str
-    revenue: int
-    netIncome: int
-    grossProfit: int
-    eps: float
-    operatingIncome: int
 
 # Query Parameters for Filtering
 class FilterParams(BaseModel):
