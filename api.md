@@ -1,115 +1,32 @@
-# Tesc.ucsd.edu api documentation
+# financial-data-filtering-app API documentation
 
 ---
 
-## Public Apis
+## Public APIs
 
 <details>
- <summary><code>GET</code> <code><b>/</b>api<b>/</b>org</code></summary>
+ <summary><code>GET</code> <code>/api/data/aapl</code></summary>
+
+##### Path Variables & Request Parameters
+
+> | name              | type         | required? | data type | description       |
+> | ----------------- | ------------ | --------- | --------- | ----------------- |
+> | start_year        | QueryParam   | no        | int       | Start year for filtering (e.g., 2020) |
+> | end_year          | QueryParam   | no        | int       | End year for filtering (e.g., 2024) |
+> | revenue_min       | QueryParam   | no        | int       | Minimum revenue for filtering |
+> | revenue_max       | QueryParam   | no        | int       | Maximum revenue for filtering |
+> | net_income_min    | QueryParam   | no        | int       | Minimum net income for filtering |
+> | net_income_max    | QueryParam   | no        | int       | Maximum net income for filtering |
+> | sort_by           | QueryParam   | no        | string    | Sort by column (`date`, `revenue`, or `netIncome`) |
+> | sort_order        | QueryParam   | no        | string    | Sort order (`asc` or `desc`) |
 
 ##### Responses
 
 > | code  | content-type       | response                      |
 > | ----- | ------------------ | ----------------------------- |
-> | `200` | `application/json` | `Array with JSON of all orgs` |
-
-</details>
-
-<details>
-<summary><code>GET</code> <code><b>/</b>api<b>/</b>org<b>/</b>{id}</code></summary>
-
-##### Path Variables & Request Parameters
-
-> | name | type         | required? | data type | description       |
-> | ---- | ------------ | --------- | --------- | ----------------- |
-> | id   | PathVariable | yes       | UUID      | Organization's Id |
-
-##### Responses
-
-> | code  | content-type       | response                                   |
-> | ----- | ------------------ | ------------------------------------------ |
-> | `200` | `application/json` | `JSON of Organization Object`              |
-> | `404` | `application/json` | `{"code":"404","message":"Org Not Found"}` |
+> | `200` | `application/json` | Array of filtered and sorted income statement data for AAPL, including the following fields: |
+> |       |                    | `date`, `revenue`, `netIncome`, `grossProfit`, `eps`, `operatingIncome` |
 
 </details>
 
 ---
-
-## Private Apis
-
-<details>
- <summary><code>GET</code> <code><b>/</b>auth<b>/</b>api<b>/</b>role</code></summary>
-
-##### Path Variables & Request Parameters
-
-> | name | type | data type | description |
-> | ---- | ---- | --------- | ----------- |
-
-##### Responses
-
-> | code  | content-type       | response                       |
-> | ----- | ------------------ | ------------------------------ |
-> | `200` | `application/json` | `Array with JSON of all roles` |
-
-</details>
-
-<details>
- <summary><code>GET</code> <code><b>/</b>auth<b>/</b>api<b>/</b>role<b>/</b>{id}</code></summary>
-
-##### Path Variables & Request Parameters
-
-> | name | type     | data type | description |
-> | ---- | -------- | --------- | ----------- |
-> | id   | required | string    | Role's Id   |
-
-##### Responses
-
-> | code  | content-type       | response                       |
-> | ----- | ------------------ | ------------------------------ |
-> | `200` | `application/json` | `Array with JSON of all roles` |
-
-</details>
-
-<details>
-<summary><code>GET</code> <code>/auth/api/purchase</code></summary>
-
-##### Retrieves All purchase information
-
-> `FINANCE`, `IDEA_ADVISOR` (All purchase)
-> `ORGANIZATION` (Organization's purchase)
-
-##### Path Variables & Request Parameters
-
-> | name           | type         | required? | data type | description       |
-> | -------------- | ------------ | --------- | --------- | ----------------- |
-> | organizationId | RequestParam | no        | UUID      | Organization's Id |
-
-##### Responses
-
-> | code  | content-type       | response                         |
-> | ----- | ------------------ | -------------------------------- |
-> | `200` | `application/json` | Array with JSON of all purchases |
-> | ``    |                    |                                  |
-
-</details>
-
-<details>
-<summary><code>GET</code> <code>/auth/api/purchase/{id}</code></summary>
-
-##### Retrieves All purchase information
-
-> Role: `FINANCE`
-
-##### Path Variables & Request Parameters
-
-> | name | type     | data type | description   |
-> | ---- | -------- | --------- | ------------- |
-> | id   | required | UUID      | Purchase's Id |
-
-##### Responses
-
-> | code  | content-type       | response                     | example |
-> | ----- | ------------------ | ---------------------------- | ------- |
-> | `200` | `application/json` | Array with JSON of all roles | `{}`    |
-
-</details>
