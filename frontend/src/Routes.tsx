@@ -5,7 +5,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 
-const TescRoutes: React.FC = () => {
+const AppRoutes: React.FC = () => {
   const router = createBrowserRouter([
     {
       path: "/",
@@ -22,4 +22,4 @@ const TescRoutes: React.FC = () => {
   );
 };
 
-export default TescRoutes;
+export default AppRoutes;
