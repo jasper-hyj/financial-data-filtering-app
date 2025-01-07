@@ -8,12 +8,12 @@
       }
     },
     {
-      "src": "api/main.py",
+      "src": "backend/main.py",
       "use": "@vercel/python@4.3.0"
     }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "/api/main.py" },
+    { "src": "/api/(.*)", "dest": "/backend/main.py" },
     { "src": "/static/(.*)", "dest": "/frontend/build/static/$1" },
     { "src": "/(.*)", "dest": "/frontend/build/index.html" }
   ]
