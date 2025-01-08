@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 interface FilterProps {
   filters: {
@@ -21,22 +21,17 @@ interface FilterProps {
   >;
 }
 
-
 const FilterForm: React.FC<FilterProps> = ({ filters, setFilters }) => {
-  const [localFilters, setLocalFilters] = useState(filters);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setLocalFilters({ ...localFilters, [name]: value });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setFilters(localFilters); // Ensure this matches the expected type
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [name]: value,
+    }));
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form className="space-y-4">
       <div>
         <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">
           Start Date
@@ -45,7 +40,7 @@ const FilterForm: React.FC<FilterProps> = ({ filters, setFilters }) => {
           type="date"
           id="startDate"
           name="startDate"
-          value={localFilters.startDate}
+          value={filters.startDate}
           onChange={handleChange}
           className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
         />
@@ -58,7 +53,7 @@ const FilterForm: React.FC<FilterProps> = ({ filters, setFilters }) => {
           type="date"
           id="endDate"
           name="endDate"
-          value={localFilters.endDate}
+          value={filters.endDate}
           onChange={handleChange}
           className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
         />
@@ -71,7 +66,7 @@ const FilterForm: React.FC<FilterProps> = ({ filters, setFilters }) => {
           type="number"
           id="minRevenue"
           name="minRevenue"
-          value={localFilters.minRevenue}
+          value={filters.minRevenue}
           onChange={handleChange}
           className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
         />
@@ -84,7 +79,7 @@ const FilterForm: React.FC<FilterProps> = ({ filters, setFilters }) => {
           type="number"
           id="maxRevenue"
           name="maxRevenue"
-          value={localFilters.maxRevenue}
+          value={filters.maxRevenue}
           onChange={handleChange}
           className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
         />
@@ -97,7 +92,7 @@ const FilterForm: React.FC<FilterProps> = ({ filters, setFilters }) => {
           type="number"
           id="minNetIncome"
           name="minNetIncome"
-          value={localFilters.minNetIncome}
+          value={filters.minNetIncome}
           onChange={handleChange}
           className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
         />
@@ -110,17 +105,11 @@ const FilterForm: React.FC<FilterProps> = ({ filters, setFilters }) => {
           type="number"
           id="maxNetIncome"
           name="maxNetIncome"
-          value={localFilters.maxNetIncome}
+          value={filters.maxNetIncome}
           onChange={handleChange}
           className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
         />
       </div>
-      <button
-        type="submit"
-        className="mt-4 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-sm font-medium text-white hover:bg-indigo-700"
-      >
-        Apply Filters
-      </button>
     </form>
   );
 };
