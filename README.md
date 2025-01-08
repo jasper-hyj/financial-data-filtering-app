@@ -37,3 +37,43 @@ docker run --env-file .env -p 8000:8000 finance-data-filtering-app
 ```
 
 6. Check Application running on http://localhost:8000
+
+## Local Setup Instruction (Without Docker)
+1. Clone the repository to your local machine:
+
+```bash
+git clone https://github.com/jasper-hyj/financial-data-filtering-app.git
+```
+
+2. Navigate into the project directory:
+
+```bash
+cd finance-data-filtering-app
+```
+
+3. Create `.env` file in root (based on .env.example)
+
+4. Setup Frontend
+```bash
+cd frontend
+```
+
+4. Setup Python virtual environment
+```bash
+python3 -m venv venv
+```
+
+1. Run Python virtual environment
+For Windows: 
+```bash
+.\env\Scripts\activate 
+```
+
+For Mac or Linux:
+```bash
+source ./venv/bin/activate
+```
+
+
+
+1. Check Application running on http://localhost:8000
