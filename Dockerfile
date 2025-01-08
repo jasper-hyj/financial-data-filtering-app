@@ -4,24 +4,17 @@ FROM node:18
 # Set the working directory for the React app
 WORKDIR /app
 
-# Copy package.json and package-lock.json for frontend
-COPY frontend/package.json frontend/package-lock.json ./frontend/
-
-# Install dependencies for frontend
+# Setup Frontend
 WORKDIR /app/frontend
-RUN npm install
-
-# Copy all frontend source files
 COPY frontend/ /app/frontend/
-
-# Build the React app
+RUN npm install
 RUN npm run build
 
 # Install Python and create virtual environment for the backend
 WORKDIR /app/backend
 RUN apt-get update && apt-get install -y python3 python3-pip python3-venv
 
-# Copy the backend files, including requirements.txt
+# Copy backend code
 COPY backend/ /app/backend/
 
 # Create a virtual environment and activate it
