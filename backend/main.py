@@ -1,6 +1,7 @@
 from fastapi import Depends, FastAPI, HTTPException, Query
 from fastapi.responses import FileResponse
 from typing import List
+from fastapi.staticfiles import StaticFiles
 import requests
 import os
 
@@ -22,15 +23,11 @@ def fetch_data_from_api(params: dict):
         return response.json()
     else:
         raise HTTPException(status_code=response.status_code, detail="Failed to fetch data from the API.")
-    
-@app.get("/")
-async def serve_index():
-    index_path = os.path.join("frontend", "build", "index.html")
-    return FileResponse(index_path)
+
 
 # Fetch, filter, and sort the data
 @app.get("/api/data", response_model=List[IncomeStatement])
-async def get_data_aapl(filters: FilterParams = Depends()):
+async def get_data(filters: FilterParams = Depends()):
     # Prepare query params based on filters
     params = {}
     
@@ -67,3 +64,4 @@ async def get_data_aapl(filters: FilterParams = Depends()):
     ]
     return results
 
+app.mount("/", StaticFiles(directory="frontend/build", html=True), name="static")
