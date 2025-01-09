@@ -44,16 +44,39 @@ const FilterForm: React.FC<FilterFormProps> = ({ filters, setFilters }) => {
     }));
   };
 
+  // Handle filter reset
+  const handleFilterReset = () => {
+    setFilters((prev) => ({
+      startDate: "",
+      endDate: "",
+      minRevenue: 0,
+      maxRevenue: Infinity,
+      minNetIncome: 0,
+      maxNetIncome: Infinity,
+      sortBy: "date",
+      sortOrder: "asc",
+    }));
+  };
+
   return (
     <div className="space-y-2 max-w-3xl m-auto">
       {/* Toggle button for showing/hiding filters */}
-      <button
-        onClick={toggleFilterVisibility}
-        className="text-blue-600 py-1 px-3 text-sm rounded-md hover:bg-blue-100 focus:outline-none transition duration-300"
-      >
-        {isFilterVisible ? "Hide Filters" : "Show Filters"}
-      </button>
-
+      <div className="flex space-x-1 justify-center">
+        <button
+          onClick={toggleFilterVisibility}
+          className="text-blue-600 py-1 px-3 text-sm rounded-md hover:bg-blue-100 focus:outline-none transition duration-300"
+        >
+          {isFilterVisible ? "Hide Filters" : "Show Filters"}
+        </button>
+        <button
+          onClick={handleFilterReset}
+          className="text-blue-600 py-1 px-3 text-sm rounded-md hover:bg-blue-100 focus:outline-none"
+        >
+          Reset Filters
+        </button>
+      </div>
+      
+      
       {/* Filter form with animation */}
       <div
         className={`p-3 overflow-hidden transition-all duration-500 ease-in-out ${
