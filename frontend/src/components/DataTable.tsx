@@ -9,13 +9,13 @@ interface DataTableProps {
 
 const DataTable: React.FC<DataTableProps> = ({ data, setFilters }) => {
   const [useSuffix, setUseSuffix] = useState(false);
-
-  const handleSort = (column: keyof IncomeStatement, order: "asc" | "desc") => {
-      setFilters((prev) => ({
-        ...prev,
-        sortBy: column,
-        sortOrder: order
-      }));
+  
+  const handleSort = (column: keyof IncomeStatement) => {
+    setFilters((prev) => ({
+      ...prev,
+      sortBy: column,
+      sortOrder: prev.sortBy === column && prev.sortOrder === "asc" ? "desc" : "asc",
+    }));
   };
 
   return (
@@ -34,118 +34,70 @@ const DataTable: React.FC<DataTableProps> = ({ data, setFilters }) => {
       <div className="w-full overflow-x-auto">
         <table className="overflow-x-scroll table-auto w-full border-collapse border border-gray-300">
           <thead className="select-none">
-          <tr>
+            <tr>
               <th className="border border-gray-300 p-2 min-w-28">
                 <div className="flex items-center">
                   Date
-                  <div className="ml-auto">
-                  <div
-                      className="cursor-pointer text-xs"
-                      onClick={() => handleSort("date", "asc")}
-                    >
-                      &#9650;
-                    </div>
-                    <div
-                      className="cursor-pointer text-xs"
-                      onClick={() => handleSort("date", "desc")}
-                    >
-                      &#9660;
-                    </div>
+                  <div className="ml-auto" onClick={() => handleSort("date")}>
+                    <div className="cursor-pointer text-xs">&#9650;</div>
+                    <div className="cursor-pointer text-xs">&#9660;</div>
                   </div>
                 </div>
               </th>
               <th className="border border-gray-300 p-2">
-                <div className="flex items-center">
+                <div
+                  className="flex items-center"
+                  onClick={() => handleSort("revenue")}
+                >
                   Revenue
                   <div className="ml-auto">
-                    <div
-                      className="cursor-pointer text-xs"
-                      onClick={() => handleSort("revenue", "asc")}
-                    >
-                      &#9650;
-                    </div>
-                    <div
-                      className="cursor-pointer text-xs"
-                      onClick={() => handleSort("revenue", "desc")}
-                    >
-                      &#9660;
-                    </div>
+                    <div className="cursor-pointer text-xs">&#9650;</div>
+                    <div className="cursor-pointer text-xs">&#9660;</div>
                   </div>
                 </div>
               </th>
               <th className="border border-gray-300 p-2">
                 <div className="flex items-center">
                   Net Income
-                  <div className="ml-auto">
-                    <div
-                      className="cursor-pointer text-xs"
-                      onClick={() => handleSort("netIncome", "asc")}
-                    >
-                      &#9650;
-                    </div>
-                    <div
-                      className="cursor-pointer text-xs"
-                      onClick={() => handleSort("netIncome", "desc")}
-                    >
-                      &#9660;
-                    </div>
+                  <div
+                    className="ml-auto"
+                    onClick={() => handleSort("netIncome")}
+                  >
+                    <div className="cursor-pointer text-xs">&#9650;</div>
+                    <div className="cursor-pointer text-xs">&#9660;</div>
                   </div>
                 </div>
               </th>
               <th className="border border-gray-300 p-2">
                 <div className="flex items-center">
                   Gross Profit
-                  <div className="ml-auto">
-                    <div
-                      className="cursor-pointer text-xs"
-                      onClick={() => handleSort("grossProfit", "asc")}
-                    >
-                      &#9650;
-                    </div>
-                    <div
-                      className="cursor-pointer text-xs"
-                      onClick={() => handleSort("grossProfit", "desc")}
-                    >
-                      &#9660;
-                    </div>
+                  <div
+                    className="ml-auto"
+                    onClick={() => handleSort("grossProfit")}
+                  >
+                    <div className="cursor-pointer text-xs">&#9650;</div>
+                    <div className="cursor-pointer text-xs">&#9660;</div>
                   </div>
                 </div>
               </th>
               <th className="border border-gray-300 p-2">
                 <div className="flex items-center">
                   EPS
-                  <div className="ml-auto">
-                    <div
-                      className="cursor-pointer text-xs"
-                      onClick={() => handleSort("eps", "asc")}
-                    >
-                      &#9650;
-                    </div>
-                    <div
-                      className="cursor-pointer text-xs"
-                      onClick={() => handleSort("eps", "desc")}
-                    >
-                      &#9660;
-                    </div>
+                  <div className="ml-auto" onClick={() => handleSort("eps")}>
+                    <div className="cursor-pointer text-xs">&#9650;</div>
+                    <div className="cursor-pointer text-xs">&#9660;</div>
                   </div>
                 </div>
               </th>
               <th className="border border-gray-300 p-2">
                 <div className="flex items-center">
                   Operating Income
-                  <div className="ml-auto">
-                    <div
-                      className="cursor-pointer text-xs"
-                      onClick={() => handleSort("operatingIncome", "asc")}
-                    >
-                      &#9650;
-                    </div>
-                    <div
-                      className="cursor-pointer text-xs"
-                      onClick={() => handleSort("operatingIncome", "desc")}
-                    >
-                      &#9660;
-                    </div>
+                  <div
+                    className="ml-auto"
+                    onClick={() => handleSort("operatingIncome")}
+                  >
+                    <div className="cursor-pointer text-xs">&#9650;</div>
+                    <div className="cursor-pointer text-xs">&#9660;</div>
                   </div>
                 </div>
               </th>
