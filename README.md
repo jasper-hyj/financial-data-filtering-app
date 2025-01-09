@@ -4,6 +4,7 @@ This is a financial data filtering app using data from Finance Modeling Prep API
 annual income statements for AAPL (Apple) and allow users to filter and analyze key metrics.
 
 ## Live Deployed: https://financial-data-filtering-app.onrender.com/
+- It may required some time for the live version to load, reload the webpage if it's not loading.
 
 ## Prerequisites
 
