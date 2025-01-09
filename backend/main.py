@@ -1,11 +1,10 @@
-from fastapi import Depends, FastAPI, HTTPException, Query
-from fastapi.responses import FileResponse
+from fastapi import FastAPI, HTTPException
 from typing import List
 from fastapi.staticfiles import StaticFiles
 import requests
 import os
 
-from backend.model import FilterParams, IncomeStatement
+from backend.model import IncomeStatement
 
 app = FastAPI()
 
@@ -15,9 +14,9 @@ API_KEY = os.environ.get('API_KEY')
 
 
 # Helper function to fetch data from the API for AAPL
-def fetch_data_from_api(params: dict):
+def fetch_data_from_api():
     url = f"{BASE_URL}?apikey={API_KEY}"
-    response = requests.get(url, params=params)
+    response = requests.get(url)
     
     if response.status_code == 200:
         return response.json()
@@ -27,29 +26,10 @@ def fetch_data_from_api(params: dict):
 
 # Fetch, filter, and sort the data
 @app.get("/api/data", response_model=List[IncomeStatement])
-async def get_data(filters: FilterParams = Depends()):
-    # Prepare query params based on filters
-    params = {}
+async def get_data():
     
     # Fetching data
-    data = fetch_data_from_api(params=params)
-
-    # Year filter
-    if filters.start_year and filters.end_year:
-        data = [item for item in data if int(item['date'][:4]) >= filters.start_year and int(item['date'][:4]) <= filters.end_year]
-    
-    # Revenue range filter
-    if filters.revenue_min is not None and filters.revenue_max is not None:
-        data = [item for item in data if filters.revenue_min <= item['revenue'] <= filters.revenue_max]
-    
-    # Net income range filter
-    if filters.net_income_min is not None and filters.net_income_max is not None:
-        data = [item for item in data if filters.net_income_min <= item['netIncome'] <= filters.net_income_max]
-
-    # Sorting based on user's choice (date, revenue, netIncome)
-    if filters.sort_by:
-        reverse = True if filters.sort_order == "desc" else False
-        data = sorted(data, key=lambda x: x[filters.sort_by], reverse=reverse)
+    data = fetch_data_from_api()
 
     # Map the data into the required model
     results = [
@@ -64,4 +44,5 @@ async def get_data(filters: FilterParams = Depends()):
     ]
     return results
 
+# API for all other request(static files)
 app.mount("/", StaticFiles(directory="frontend/build", html=True), name="static")

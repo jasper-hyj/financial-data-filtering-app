@@ -5,8 +5,13 @@ import IncomeStatement, { IncomeStatementFilters } from "./model/types";
 import axios from "axios";
 
 const App: React.FC = () => {
-  const [data, setData] = useState<IncomeStatement[]>([]); // Raw data
+  // Data Values
+  const [data, setData] = useState<IncomeStatement[]>([]);
+
+  // Filter Settings
   const [filteredData, setFilteredData] = useState<IncomeStatement[]>([]); // Filtered data
+
+  // Filter Set with original values
   const [filters, setFilters] = useState<IncomeStatementFilters>({
     startDate: "",
     endDate: "",

@@ -9,10 +9,12 @@ interface FilterFormProps {
 const FilterForm: React.FC<FilterFormProps> = ({ filters, setFilters }) => {
   const [isFilterVisible, setIsFilterVisible] = useState(true);
 
+  // Filter Toggle Setting
   const toggleFilterVisibility = () => {
     setIsFilterVisible((prev) => !prev);
   };
 
+  // Handle value change
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -24,6 +26,7 @@ const FilterForm: React.FC<FilterFormProps> = ({ filters, setFilters }) => {
     }));
   };
 
+  // Handle start year change
   const handleStartYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedStartYear = e.target.value;
     setFilters((prev) => ({
@@ -32,6 +35,7 @@ const FilterForm: React.FC<FilterFormProps> = ({ filters, setFilters }) => {
     }));
   };
 
+  // Handle end year change
   const handleEndYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedEndYear = e.target.value;
     setFilters((prev) => ({
@@ -73,7 +77,7 @@ const FilterForm: React.FC<FilterFormProps> = ({ filters, setFilters }) => {
               value={filters.startDate?.substring(0, 4) || ""}
               className="p-2 text-xs border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300"
             >
-              {/* Options for the last 5 years */}
+              <option value="">None</option>
               {Array.from({ length: 20 }, (_, index) => {
                 const year = new Date().getFullYear() - index;
                 return (
@@ -99,7 +103,7 @@ const FilterForm: React.FC<FilterFormProps> = ({ filters, setFilters }) => {
               value={filters.endDate?.substring(0, 4) || ""}
               className="p-2 text-xs border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300"
             >
-              {/* Options for the last 5 years */}
+              <option value="">None</option>
               {Array.from({ length: 20 }, (_, index) => {
                 const year = new Date().getFullYear() - index;
                 return (
