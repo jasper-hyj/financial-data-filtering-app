@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { IncomeStatementFilters } from "../model/types";
 
 interface FilterFormProps {
@@ -7,59 +7,146 @@ interface FilterFormProps {
 }
 
 const FilterForm: React.FC<FilterFormProps> = ({ filters, setFilters }) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const [isFilterVisible, setIsFilterVisible] = useState(true);
+
+  const toggleFilterVisibility = () => {
+    setIsFilterVisible((prev) => !prev);
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFilters((prev) => ({
       ...prev,
-      [name]: name.includes("min") || name.includes("max") ? Number(value) : value,
+      [name]:
+        name.includes("min") || name.includes("max") ? Number(value) : value,
     }));
   };
 
   return (
-    <form className="flex flex-wrap gap-4">
-      <input
-        type="date"
-        name="startDate"
-        onChange={handleChange}
-        placeholder="Start Date"
-        className="p-2 border border-gray-300 rounded"
-      />
-      <input
-        type="date"
-        name="endDate"
-        onChange={handleChange}
-        placeholder="End Date"
-        className="p-2 border border-gray-300 rounded"
-      />
-      <input
-        type="number"
-        name="minRevenue"
-        onChange={handleChange}
-        placeholder="Min Revenue"
-        className="p-2 border border-gray-300 rounded"
-      />
-      <input
-        type="number"
-        name="maxRevenue"
-        onChange={handleChange}
-        placeholder="Max Revenue"
-        className="p-2 border border-gray-300 rounded"
-      />
-      <input
-        type="number"
-        name="minNetIncome"
-        onChange={handleChange}
-        placeholder="Min Net Income"
-        className="p-2 border border-gray-300 rounded"
-      />
-      <input
-        type="number"
-        name="maxNetIncome"
-        onChange={handleChange}
-        placeholder="Max Net Income"
-        className="p-2 border border-gray-300 rounded"
-      />
-    </form>
+    <div className="space-y-2 max-w-3xl m-auto">
+      {/* Toggle button for showing/hiding filters */}
+      <button
+        onClick={toggleFilterVisibility}
+        className="text-blue-600 py-1 px-3 text-sm rounded-md hover:bg-blue-100 focus:outline-none transition duration-300"
+      >
+        {isFilterVisible ? "Hide Filters" : "Show Filters"}
+      </button>
+
+      {/* Filter form with animation */}
+      <div
+        className={`p-3 overflow-hidden transition-all duration-500 ease-in-out ${
+          isFilterVisible
+            ? "max-h-screen opacity-100"
+            : "max-h-0 opacity-0 pointer-events-none"
+        }`}
+      >
+        <form className="space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4">
+          {/* Start Date Filter */}
+          <div className="flex flex-col">
+            <label
+              htmlFor="startDate"
+              className="text-xs font-semibold text-gray-700 mb-1"
+            >
+              Start Date
+            </label>
+            <input
+              type="date"
+              name="startDate"
+              onChange={handleChange}
+              value={filters.startDate || ""}
+              className="p-2 text-xs border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300"
+            />
+          </div>
+
+          {/* End Date Filter */}
+          <div className="flex flex-col">
+            <label
+              htmlFor="endDate"
+              className="text-xs font-semibold text-gray-700 mb-1"
+            >
+              End Date
+            </label>
+            <input
+              type="date"
+              name="endDate"
+              onChange={handleChange}
+              value={filters.endDate || ""}
+              className="p-2 text-xs border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300"
+            />
+          </div>
+
+          {/* Min Revenue Filter */}
+          <div className="flex flex-col">
+            <label
+              htmlFor="minRevenue"
+              className="text-xs font-semibold text-gray-700 mb-1"
+            >
+              Min Revenue
+            </label>
+            <input
+              type="number"
+              name="minRevenue"
+              onChange={handleChange}
+              value={filters.minRevenue || ""}
+              className="p-2 text-xs border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300"
+            />
+          </div>
+
+          {/* Max Revenue Filter */}
+          <div className="flex flex-col">
+            <label
+              htmlFor="maxRevenue"
+              className="text-xs font-semibold text-gray-700 mb-1"
+            >
+              Max Revenue
+            </label>
+            <input
+              type="number"
+              name="maxRevenue"
+              onChange={handleChange}
+              value={filters.maxRevenue || ""}
+              className="p-2 text-xs border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300"
+            />
+          </div>
+
+          {/* Min Net Income Filter */}
+          <div className="flex flex-col">
+            <label
+              htmlFor="minNetIncome"
+              className="text-xs font-semibold text-gray-700 mb-1"
+            >
+              Min Net Income
+            </label>
+            <input
+              type="number"
+              name="minNetIncome"
+              onChange={handleChange}
+              value={filters.minNetIncome || ""}
+              className="p-2 text-xs border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300"
+            />
+          </div>
+
+          {/* Max Net Income Filter */}
+          <div className="flex flex-col">
+            <label
+              htmlFor="maxNetIncome"
+              className="text-xs font-semibold text-gray-700 mb-1"
+            >
+              Max Net Income
+            </label>
+            <input
+              type="number"
+              name="maxNetIncome"
+              onChange={handleChange}
+              value={filters.maxNetIncome || ""}
+              className="p-2 text-xs border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 

@@ -38,7 +38,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, setFilters }) => {
               <th className="border border-gray-300 p-2 min-w-28">
                 <div className="flex items-center">
                   Date
-                  <div className="ml-auto" onClick={() => handleSort("date")}>
+                  <div className="ml-auto pl-1" onClick={() => handleSort("date")}>
                     <div className="cursor-pointer text-xs">&#9650;</div>
                     <div className="cursor-pointer text-xs">&#9660;</div>
                   </div>
@@ -50,7 +50,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, setFilters }) => {
                   onClick={() => handleSort("revenue")}
                 >
                   Revenue
-                  <div className="ml-auto">
+                  <div className="ml-auto pl-1">
                     <div className="cursor-pointer text-xs">&#9650;</div>
                     <div className="cursor-pointer text-xs">&#9660;</div>
                   </div>
@@ -60,7 +60,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, setFilters }) => {
                 <div className="flex items-center">
                   Net Income
                   <div
-                    className="ml-auto"
+                    className="ml-auto pl-1"
                     onClick={() => handleSort("netIncome")}
                   >
                     <div className="cursor-pointer text-xs">&#9650;</div>
@@ -72,7 +72,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, setFilters }) => {
                 <div className="flex items-center">
                   Gross Profit
                   <div
-                    className="ml-auto"
+                    className="ml-auto pl-1"
                     onClick={() => handleSort("grossProfit")}
                   >
                     <div className="cursor-pointer text-xs">&#9650;</div>
@@ -83,7 +83,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, setFilters }) => {
               <th className="border border-gray-300 p-2">
                 <div className="flex items-center">
                   EPS
-                  <div className="ml-auto" onClick={() => handleSort("eps")}>
+                  <div className="ml-auto pl-1" onClick={() => handleSort("eps")}>
                     <div className="cursor-pointer text-xs">&#9650;</div>
                     <div className="cursor-pointer text-xs">&#9660;</div>
                   </div>
@@ -93,7 +93,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, setFilters }) => {
                 <div className="flex items-center">
                   Operating Income
                   <div
-                    className="ml-auto"
+                    className="ml-auto pl-1"
                     onClick={() => handleSort("operatingIncome")}
                   >
                     <div className="cursor-pointer text-xs">&#9650;</div>
