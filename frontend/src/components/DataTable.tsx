@@ -1,50 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
+import IncomeStatement from "../model/types";
+import { formatNumber } from "../util/formatNumber";
 
-interface FinancialData {
-  date: string;
-  revenue: number;
-  netIncome: number;
-  grossProfit: number;
-  eps: number;
-  operatingIncome: number;
+interface DataTableProps {
+  data: IncomeStatement[];
 }
 
-interface TableProps {
-  data: FinancialData[];
-  setFilters: React.Dispatch<React.SetStateAction<Record<string, string>>>;
-}
-
-const DataTable: React.FC<TableProps> = ({ data, setFilters }) => {
-  const handleSort = (column: string) => {
-    setFilters((prev) => ({
-      ...prev,
-      sortBy: column,
-      sortOrder: prev.sortOrder === "asc" ? "desc" : "asc",
-    }));
-  };
+const DataTable: React.FC<DataTableProps> = ({ data }) => {
+  const [useSuffix, setUseSuffix] = useState(true);
 
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full bg-white rounded-lg shadow-md">
-        <thead className="bg-gray-200">
+    <div>
+      <div className="mb-4">
+        <label className="flex items-center">
+          <input
+            type="checkbox"
+            checked={useSuffix}
+            onChange={(e) => setUseSuffix(e.target.checked)}
+            className="mr-2"
+          />
+          Use Suffixes (K, M, T)
+        </label>
+      </div>
+      <table className="table-auto w-full border-collapse border border-gray-300">
+        <thead>
           <tr>
-            <th className="py-2 px-4 cursor-pointer" onClick={() => handleSort("date")}>Date</th>
-            <th className="py-2 px-4 cursor-pointer" onClick={() => handleSort("revenue")}>Revenue</th>
-            <th className="py-2 px-4 cursor-pointer" onClick={() => handleSort("netIncome")}>Net Income</th>
-            <th className="py-2 px-4">Gross Profit</th>
-            <th className="py-2 px-4">EPS</th>
-            <th className="py-2 px-4">Operating Income</th>
+            <th className="border border-gray-300 p-2">Date</th>
+            <th className="border border-gray-300 p-2">Revenue</th>
+            <th className="border border-gray-300 p-2">Net Income</th>
+            <th className="border border-gray-300 p-2">Gross Profit</th>
+            <th className="border border-gray-300 p-2">EPS</th>
+            <th className="border border-gray-300 p-2">Operating Income</th>
           </tr>
         </thead>
         <tbody>
-          {data.map((row, index) => (
-            <tr key={index} className="border-t">
-              <td className="py-2 px-4">{row.date}</td>
-              <td className="py-2 px-4">{row.revenue}</td>
-              <td className="py-2 px-4">{row.netIncome}</td>
-              <td className="py-2 px-4">{row.grossProfit}</td>
-              <td className="py-2 px-4">{row.eps}</td>
-              <td className="py-2 px-4">{row.operatingIncome}</td>
+          {data.map((item, index) => (
+            <tr key={index}>
+              <td className="border border-gray-300 p-2">{item.date}</td>
+              <td className="border border-gray-300 p-2">
+                {formatNumber(item.revenue, useSuffix)}
+              </td>
+              <td className="border border-gray-300 p-2">
+                {formatNumber(item.netIncome, useSuffix)}
+              </td>
+              <td className="border border-gray-300 p-2">
+                {formatNumber(item.grossProfit, useSuffix)}
+              </td>
+              <td className="border border-gray-300 p-2">{item.eps}</td>
+              <td className="border border-gray-300 p-2">
+                {formatNumber(item.operatingIncome, useSuffix)}
+              </td>
             </tr>
           ))}
         </tbody>
