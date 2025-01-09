@@ -1,13 +1,24 @@
 import React, { useState } from "react";
-import IncomeStatement from "../model/types";
+import IncomeStatement, { IncomeStatementFilters } from "../model/types";
 import { formatNumber } from "../util/formatNumber";
 
 interface DataTableProps {
+  setFilters: React.Dispatch<React.SetStateAction<IncomeStatementFilters>>;
   data: IncomeStatement[];
 }
 
-const DataTable: React.FC<DataTableProps> = ({ data }) => {
+const DataTable: React.FC<DataTableProps> = ({ data, setFilters }) => {
   const [useSuffix, setUseSuffix] = useState(true);
+  var sortOrder: string = "";
+  var sortColumn: string = "";
+
+  const handleSort = (column: keyof IncomeStatement, order: "asc" | "desc") => {
+      setFilters((prev) => ({
+        ...prev,
+        sortBy: column,
+        sortOrder: order
+      }));
+  };
 
   return (
     <div>
@@ -22,38 +33,148 @@ const DataTable: React.FC<DataTableProps> = ({ data }) => {
           Use Suffixes (K, M, T)
         </label>
       </div>
-      <table className="table-auto w-full border-collapse border border-gray-300">
-        <thead>
+      <div className="w-full overflow-x-auto">
+        <table className="overflow-x-scroll table-auto w-full border-collapse border border-gray-300">
+          <thead>
           <tr>
-            <th className="border border-gray-300 p-2">Date</th>
-            <th className="border border-gray-300 p-2">Revenue</th>
-            <th className="border border-gray-300 p-2">Net Income</th>
-            <th className="border border-gray-300 p-2">Gross Profit</th>
-            <th className="border border-gray-300 p-2">EPS</th>
-            <th className="border border-gray-300 p-2">Operating Income</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((item, index) => (
-            <tr key={index}>
-              <td className="border border-gray-300 p-2">{item.date}</td>
-              <td className="border border-gray-300 p-2">
-                {formatNumber(item.revenue, useSuffix)}
-              </td>
-              <td className="border border-gray-300 p-2">
-                {formatNumber(item.netIncome, useSuffix)}
-              </td>
-              <td className="border border-gray-300 p-2">
-                {formatNumber(item.grossProfit, useSuffix)}
-              </td>
-              <td className="border border-gray-300 p-2">{item.eps}</td>
-              <td className="border border-gray-300 p-2">
-                {formatNumber(item.operatingIncome, useSuffix)}
-              </td>
+              <th className="border border-gray-300 p-2">
+                <div className="flex items-center">
+                  Date
+                  <div className="ml-2">
+                  <div
+                      className="cursor-pointer text-xs"
+                      onClick={() => handleSort("date", "asc")}
+                    >
+                      &#9650;
+                    </div>
+                    <div
+                      className="cursor-pointer text-xs"
+                      onClick={() => handleSort("date", "desc")}
+                    >
+                      &#9660;
+                    </div>
+                  </div>
+                </div>
+              </th>
+              <th className="border border-gray-300 p-2">
+                <div className="flex items-center">
+                  Revenue
+                  <div className="ml-2">
+                    <div
+                      className="cursor-pointer text-xs"
+                      onClick={() => handleSort("revenue", "asc")}
+                    >
+                      &#9650;
+                    </div>
+                    <div
+                      className="cursor-pointer text-xs"
+                      onClick={() => handleSort("revenue", "desc")}
+                    >
+                      &#9660;
+                    </div>
+                  </div>
+                </div>
+              </th>
+              <th className="border border-gray-300 p-2">
+                <div className="flex items-center">
+                  Net Income
+                  <div className="ml-2">
+                    <div
+                      className="cursor-pointer text-xs"
+                      onClick={() => handleSort("netIncome", "asc")}
+                    >
+                      &#9650;
+                    </div>
+                    <div
+                      className="cursor-pointer text-xs"
+                      onClick={() => handleSort("netIncome", "desc")}
+                    >
+                      &#9660;
+                    </div>
+                  </div>
+                </div>
+              </th>
+              <th className="border border-gray-300 p-2">
+                <div className="flex items-center">
+                  Gross Profit
+                  <div className="ml-2">
+                    <div
+                      className="cursor-pointer text-xs"
+                      onClick={() => handleSort("grossProfit", "asc")}
+                    >
+                      &#9650;
+                    </div>
+                    <div
+                      className="cursor-pointer text-xs"
+                      onClick={() => handleSort("grossProfit", "desc")}
+                    >
+                      &#9660;
+                    </div>
+                  </div>
+                </div>
+              </th>
+              <th className="border border-gray-300 p-2">
+                <div className="flex items-center">
+                  EPS
+                  <div className="ml-2">
+                    <div
+                      className="cursor-pointer text-xs"
+                      onClick={() => handleSort("eps", "asc")}
+                    >
+                      &#9650;
+                    </div>
+                    <div
+                      className="cursor-pointer text-xs"
+                      onClick={() => handleSort("eps", "desc")}
+                    >
+                      &#9660;
+                    </div>
+                  </div>
+                </div>
+              </th>
+              <th className="border border-gray-300 p-2">
+                <div className="flex items-center">
+                  Operating Income
+                  <div className="ml-2">
+                    <div
+                      className="cursor-pointer text-xs"
+                      onClick={() => handleSort("operatingIncome", "asc")}
+                    >
+                      &#9650;
+                    </div>
+                    <div
+                      className="cursor-pointer text-xs"
+                      onClick={() => handleSort("operatingIncome", "desc")}
+                    >
+                      &#9660;
+                    </div>
+                  </div>
+                </div>
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {data.map((item, index) => (
+              <tr key={index}>
+                <td className="border border-gray-300 p-2">{item.date}</td>
+                <td className="border border-gray-300 p-2">
+                  {formatNumber(item.revenue, useSuffix)}
+                </td>
+                <td className="border border-gray-300 p-2">
+                  {formatNumber(item.netIncome, useSuffix)}
+                </td>
+                <td className="border border-gray-300 p-2">
+                  {formatNumber(item.grossProfit, useSuffix)}
+                </td>
+                <td className="border border-gray-300 p-2">{item.eps}</td>
+                <td className="border border-gray-300 p-2">
+                  {formatNumber(item.operatingIncome, useSuffix)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

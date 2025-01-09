@@ -75,11 +75,11 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="md:container mx-auto p-6">
       <h2 className="text-3xl text-center mb-3">Finance Data Filtering App (For AAPL)</h2>
       <FilterForm filters={filters} setFilters={setFilters} />
       <div className="mt-6">
-        <DataTable data={filteredData} />
+        <DataTable data={filteredData} setFilters={setFilters}/>
       </div>
     </div>
   );
