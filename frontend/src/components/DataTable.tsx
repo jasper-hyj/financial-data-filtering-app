@@ -8,9 +8,7 @@ interface DataTableProps {
 }
 
 const DataTable: React.FC<DataTableProps> = ({ data, setFilters }) => {
-  const [useSuffix, setUseSuffix] = useState(true);
-  var sortOrder: string = "";
-  var sortColumn: string = "";
+  const [useSuffix, setUseSuffix] = useState(false);
 
   const handleSort = (column: keyof IncomeStatement, order: "asc" | "desc") => {
       setFilters((prev) => ({
@@ -23,7 +21,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, setFilters }) => {
   return (
     <div>
       <div className="mb-4">
-        <label className="flex items-center">
+        <label className="flex items-center select-none">
           <input
             type="checkbox"
             checked={useSuffix}
@@ -35,12 +33,12 @@ const DataTable: React.FC<DataTableProps> = ({ data, setFilters }) => {
       </div>
       <div className="w-full overflow-x-auto">
         <table className="overflow-x-scroll table-auto w-full border-collapse border border-gray-300">
-          <thead>
+          <thead className="select-none">
           <tr>
-              <th className="border border-gray-300 p-2">
+              <th className="border border-gray-300 p-2 min-w-28">
                 <div className="flex items-center">
                   Date
-                  <div className="ml-2">
+                  <div className="ml-auto">
                   <div
                       className="cursor-pointer text-xs"
                       onClick={() => handleSort("date", "asc")}
@@ -59,7 +57,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, setFilters }) => {
               <th className="border border-gray-300 p-2">
                 <div className="flex items-center">
                   Revenue
-                  <div className="ml-2">
+                  <div className="ml-auto">
                     <div
                       className="cursor-pointer text-xs"
                       onClick={() => handleSort("revenue", "asc")}
@@ -78,7 +76,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, setFilters }) => {
               <th className="border border-gray-300 p-2">
                 <div className="flex items-center">
                   Net Income
-                  <div className="ml-2">
+                  <div className="ml-auto">
                     <div
                       className="cursor-pointer text-xs"
                       onClick={() => handleSort("netIncome", "asc")}
@@ -97,7 +95,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, setFilters }) => {
               <th className="border border-gray-300 p-2">
                 <div className="flex items-center">
                   Gross Profit
-                  <div className="ml-2">
+                  <div className="ml-auto">
                     <div
                       className="cursor-pointer text-xs"
                       onClick={() => handleSort("grossProfit", "asc")}
@@ -116,7 +114,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, setFilters }) => {
               <th className="border border-gray-300 p-2">
                 <div className="flex items-center">
                   EPS
-                  <div className="ml-2">
+                  <div className="ml-auto">
                     <div
                       className="cursor-pointer text-xs"
                       onClick={() => handleSort("eps", "asc")}
@@ -135,7 +133,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, setFilters }) => {
               <th className="border border-gray-300 p-2">
                 <div className="flex items-center">
                   Operating Income
-                  <div className="ml-2">
+                  <div className="ml-auto">
                     <div
                       className="cursor-pointer text-xs"
                       onClick={() => handleSort("operatingIncome", "asc")}
