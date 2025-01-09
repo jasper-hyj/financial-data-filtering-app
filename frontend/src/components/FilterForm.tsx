@@ -24,6 +24,22 @@ const FilterForm: React.FC<FilterFormProps> = ({ filters, setFilters }) => {
     }));
   };
 
+  const handleStartYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedStartYear = e.target.value;
+    setFilters((prev) => ({
+      ...prev,
+      startDate: `${selectedStartYear}-01-01`, // Set start date to January 1st of the selected start year
+    }));
+  };
+
+  const handleEndYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedEndYear = e.target.value;
+    setFilters((prev) => ({
+      ...prev,
+      endDate: `${selectedEndYear}-12-31`, // Set end date to December 31st of the selected end year
+    }));
+  };
+
   return (
     <div className="space-y-2 max-w-3xl m-auto">
       {/* Toggle button for showing/hiding filters */}
@@ -46,35 +62,53 @@ const FilterForm: React.FC<FilterFormProps> = ({ filters, setFilters }) => {
           {/* Start Date Filter */}
           <div className="flex flex-col">
             <label
-              htmlFor="startDate"
+              htmlFor="startYear"
               className="text-xs font-semibold text-gray-700 mb-1"
             >
-              Start Date
+              Start Year
             </label>
-            <input
-              type="date"
-              name="startDate"
-              onChange={handleChange}
-              value={filters.startDate || ""}
+            <select
+              name="startYear"
+              onChange={handleStartYearChange}
+              value={filters.startDate?.substring(0, 4) || ""}
               className="p-2 text-xs border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300"
-            />
+            >
+              {/* Options for the last 5 years */}
+              {Array.from({ length: 20 }, (_, index) => {
+                const year = new Date().getFullYear() - index;
+                return (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                );
+              })}
+            </select>
           </div>
 
           {/* End Date Filter */}
           <div className="flex flex-col">
             <label
-              htmlFor="endDate"
+              htmlFor="endYear"
               className="text-xs font-semibold text-gray-700 mb-1"
             >
-              End Date
+              End Year
             </label>
-            <input
-              type="date"
-              name="endDate"
-              onChange={handleChange}
-              value={filters.endDate || ""}
+            <select
+              name="endYear"
+              onChange={handleEndYearChange}
+              value={filters.endDate?.substring(0, 4) || ""}
               className="p-2 text-xs border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300"
-            />
+            >
+              {/* Options for the last 5 years */}
+              {Array.from({ length: 20 }, (_, index) => {
+                const year = new Date().getFullYear() - index;
+                return (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                );
+              })}
+            </select>
           </div>
 
           {/* Min Revenue Filter */}
